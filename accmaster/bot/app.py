@@ -47,7 +47,25 @@ class category:
         self.categoryName = ''
         self.categoryprice = 0
 
+def create_tables():
+    cursor.execute("SELECT name FROM adminTG_category")
+    categories = cursor.fetchall()
 
+
+    for name in categories:
+
+        sheets = gc.spreadsheet_titles(query=None)
+        if name[0] in sheets:
+            print(f'{name[0]} ........is alredy exist')
+            pass
+        else:
+            newsheet = gc.create(title=name[0])
+            print(f'{name[0]} ........created')
+
+sheet = gc.open(title='accmaster')
+wks = sheet.sheet1
+cell_matrix = wks.get_values(start=(1,2), end=(3,3), returnas='matrix')
+print(cell_matrix[1])
 @bot.message_handler(commands=['buy'])
 def category(message):
 
