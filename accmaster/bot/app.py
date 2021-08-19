@@ -13,7 +13,7 @@ import pathlib
 from pathlib import Path
 from accmaster.bot.typesButtons import mainmenuKB, backM
 
-bot = telebot.TeleBot('1827521176:AAEY7xTObJ1e9A5WDkJb5N7XrtGz4f_B5ys')
+bot = telebot.TeleBot('')
 p = Path(__file__).resolve().parent.parent / 'adminkaTG' / 'db.sqlite3'
 print(p)
 connection = sqlite3.connect(p, check_same_thread=False)
@@ -161,9 +161,9 @@ def choose(message):
 def buy(message):
     purchase.count = message.text
     try:
-        merchant_key = "ec394cff2f91ff7a0059779674b60ce2c3892a20"
-        merchant_account = "t_me500"
-        merchant_domain_name = "t.me/accmaster_bot"
+        merchant_key = ""
+        merchant_account = ""
+        merchant_domain_name = ""
         currency = "UAH"
         count = int(purchase.count)
         productName = purchase.name
@@ -172,7 +172,7 @@ def buy(message):
         purchase.order = str(random.randrange(0, 9999999999999))
         purchase.date = int(datetime.now().replace(tzinfo=timezone.utc).timestamp())
 
-        signature_data = f"t_me500;t.me/accmaster_bot;{purchase.order};{purchase.date};{purchase.cost};{currency};{productName};{count};{productPrice}"
+        signature_data = f";t.me/accmaster_bot;{purchase.order};{purchase.date};{purchase.cost};{currency};{productName};{count};{productPrice}"
         signature = generate_signature(merchant_key, signature_data)
         params = {
             'transactionType': "CREATE_INVOICE",
@@ -210,9 +210,9 @@ def buy(message):
         bot.send_message(message.chat.id, text=f'Ошибка! \nКод ошибки - {reasonCode} ({reason})',
                          reply_markup=mainmenuKB)
     add_order(name=purchase.name, id=purchase.order, date=datetime.fromtimestamp(purchase.date), cost=purchase.cost)
-    merchant_key = "ec394cff2f91ff7a0059779674b60ce2c3892a20"
-    merchant_account = "t_me500"
-    signature_data = f"t_me500;{purchase.order}"
+    merchant_key = ""
+    merchant_account = ""
+    signature_data = f";{purchase.order}"
 
     data = {
         "transactionType": "CHECK_STATUS",
